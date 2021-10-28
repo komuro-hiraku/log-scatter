@@ -40,6 +40,12 @@ dependencies {
     testImplementation "org.projectlombok:lombok"
     testAnnotationProcessor "org.projectlombok:lombok"
 
+    // logging
+    implementation "ch.qos.logback:logback-classic"
+    implementation "ch.qos.logback.contrib:logback-json-classic:$logbackContribVersion"
+    implementation "ch.qos.logback.contrib:logback-jackson:$logbackContribVersion"
+    implementation 'org.codehaus.janino:janino:3.1.0' // for log evaluator
+
     // test
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
