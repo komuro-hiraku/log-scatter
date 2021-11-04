@@ -31,6 +31,8 @@ import org.springframework.stereotype.Component;
 public class LogScatter implements CommandLineRunner {
 	
 	private final TaskExecutor taskExecutor;
+
+	private final LogScatterProperties properties;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -44,7 +46,7 @@ public class LogScatter implements CommandLineRunner {
 	private void sleep(long v) {
 		if (v % 5 == 0) {
 			try {
-				Thread.sleep(1);
+				Thread.sleep(properties.getWaitSleepMilliseconds());
 			} catch (InterruptedException e) {
 				log.error("Unexpected interrupt", e);
 			}
