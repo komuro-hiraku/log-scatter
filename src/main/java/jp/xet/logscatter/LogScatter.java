@@ -16,8 +16,11 @@
 package jp.xet.logscatter;
 
 import java.text.DecimalFormat;
+import java.util.Map;
 import java.util.stream.LongStream;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,14 +36,24 @@ public class LogScatter implements CommandLineRunner {
 	private final TaskExecutor taskExecutor;
 
 	private final LogScatterProperties properties;
-	
+
+	private final ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper();
+
 	@Override
 	public void run(String... args) throws Exception {
 		DecimalFormat formatter = new DecimalFormat("000,000,000,000,000,000,000");
 		taskExecutor.execute(() -> LongStream.iterate(0, v -> v + 1)
 			.peek(this::sleep)
 			.mapToObj(formatter::format)
-			.forEach(log::info));
+			.forEach(v -> {
+				Map<String, String> map = GarbageLogUtil.getDummyBody(properties.getAttributesCount());
+				try {
+					log.info("{}", objectMapper.writeValueAsString(map));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+			})
+		);
 	}
 	
 	private void sleep(long v) {

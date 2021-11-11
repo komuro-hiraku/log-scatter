@@ -15,9 +15,12 @@ public class LogScatterProperties implements InitializingBean {
 
     private Long waitSleepMilliseconds;
 
+    private Integer attributesCount;
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        log.info("{}", waitSleepMilliseconds);
+        log.info("{}", this);
         Assert.state(waitSleepMilliseconds != null, "must set waitSleepMilliseconds property");
+        Assert.state(attributesCount != null, "must set attributesCount property");
     }
 }
