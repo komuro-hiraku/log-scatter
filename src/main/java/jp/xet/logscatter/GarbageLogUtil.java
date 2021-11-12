@@ -12,7 +12,7 @@ public class GarbageLogUtil {
     public static final String ABYSS_SENTENSE = "Beware that, when fighting monsters, you yourself do not become a monster… for when you gaze long into the abyss. The abyss gazes also into you.";
 
     public static Map<String, String> getDummyBody(int itemCount) {
-        if (body != null && body.size() == itemCount) {
+        if (body != null && body.size() >= itemCount) {
             return body;
         } else {
             body = new HashMap<>();

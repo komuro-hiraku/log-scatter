@@ -17,6 +17,8 @@ package jp.xet.logscatter;
 
 import java.text.DecimalFormat;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -42,6 +45,7 @@ public class LogScatter implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		DecimalFormat formatter = new DecimalFormat("000,000,000,000,000,000,000");
+		log.info("Keep-alive: {}", ((ThreadPoolTaskExecutor)taskExecutor).getKeepAliveSeconds());
 		taskExecutor.execute(() -> LongStream.iterate(0, v -> v + 1)
 			.peek(this::sleep)
 			.mapToObj(formatter::format)
