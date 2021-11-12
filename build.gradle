@@ -73,6 +73,9 @@ jib {
           password = "$System.env.DOCKERHUB_PASS"
         }
     }
+    from {
+        image = "adoptopenjdk:11-jre"
+    }
 }
 
 // ================
